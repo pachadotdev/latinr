@@ -10,15 +10,15 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="475.54926mm"
-   height="234.4579mm"
-   viewBox="0 0 475.54926 234.45791"
+   height="231.7776mm"
+   viewBox="0 0 475.54926 231.77761"
    version="1.1"
    id="svg8"
    inkscape:export-filename="C:\Users\mvargass\Desktop\bitmap.png"
    inkscape:export-xdpi="149.98067"
    inkscape:export-ydpi="149.98067"
    sodipodi:docname="stack.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <defs
      id="defs2">
     <marker
@@ -513,9 +513,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9899495"
-     inkscape:cx="1152.6497"
-     inkscape:cy="394.21596"
+     inkscape:zoom="0.35"
+     inkscape:cx="1589.8575"
+     inkscape:cy="309.95625"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -525,128 +525,128 @@
      fit-margin-bottom="0"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1012"
-     inkscape:window-x="0"
-     inkscape:window-y="32"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1">
     <sodipodi:guide
-       position="107.5118,93.369415"
+       position="107.5118,93.369407"
        orientation="1,0"
        id="guide3963"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="337.69931,56.705724"
+       position="337.69931,56.705716"
        orientation="0,1"
        id="guide5054"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="225.44038,56.705723"
+       position="225.44038,56.705715"
        orientation="0,1"
        id="guide5222"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="269.28562,56.705722"
+       position="269.28562,56.705714"
        orientation="1,0"
        id="guide5224"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="200.87192,56.705723"
+       position="200.87192,56.705715"
        orientation="1,0"
        id="guide10069"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="200.87192,151.57774"
+       position="200.87192,151.57773"
        orientation="0,1"
        id="guide10071"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="406.18753,8.3247697"
+       position="406.18753,8.3247623"
        orientation="0,1"
        id="guide10393"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="360.01672,90.683122"
+       position="360.01672,90.683114"
        orientation="0,1"
        id="guide10395"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="246.98502,77.494414"
+       position="246.98502,77.494406"
        orientation="1,0"
        id="guide10397"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="344.12491,8.3247697"
+       position="344.12491,8.3247623"
        orientation="1,0"
        id="guide10401"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="246.98502,79.298488"
+       position="246.98502,79.29848"
        orientation="0,1"
        id="guide11111"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="269.28562,158.83686"
+       position="269.28562,158.83685"
        orientation="0,1"
        id="guide11866"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="288.36817,192.67397"
+       position="288.36817,192.67396"
        orientation="0,1"
        id="guide11868"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="303.55603,192.67397"
+       position="303.55603,192.67396"
        orientation="1,0"
        id="guide11870"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="350.92848,79.298487"
+       position="350.92848,79.298479"
        orientation="1,0"
        id="guide13317"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="469.01973,151.57774"
+       position="469.01973,151.57773"
        orientation="1,0"
        id="guide15279"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="334.34214,170.8807"
+       position="334.34214,170.88069"
        orientation="1,0"
        id="guide15395"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="227.88181,151.57774"
+       position="227.88181,151.57773"
        orientation="1,0"
        id="guide15676"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="315.7168,151.57774"
+       position="315.7168,151.57773"
        orientation="1,0"
        id="guide15678"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="269.28562,206.3843"
+       position="269.28562,206.38429"
        orientation="0,1"
        id="guide15680"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="293.13252,158.83686"
+       position="293.13252,158.83685"
        orientation="1,0"
        id="guide18216"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="66.95102,56.705724"
+       position="66.951024,56.705716"
        orientation="1,0"
        id="guide18374"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="227.88181,165.80555"
+       position="227.88181,165.80554"
        orientation="0,1"
        id="guide18376"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="150.87365,165.80555"
+       position="150.87365,165.80554"
        orientation="1,0"
        id="guide18378"
        inkscape:locked="false" />
@@ -659,7 +659,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -667,7 +667,7 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(235.64572,16.823599)">
+     transform="translate(235.64572,14.143315)">
     <g
        id="g18679"
        transform="translate(10.289877)">
@@ -688,19 +688,19 @@
            style="clip-rule:evenodd;opacity:1;fill:#0080ff;fill-rule:evenodd;enable-background:new"
            id="XMLID_46_"
            class="st1"
-           points="32.6,82.5 32.6,97.5 17.6,97.5 17.6,82.5 "
+           points="17.6,97.5 17.6,82.5 32.6,82.5 32.6,97.5 "
            transform="matrix(0.26458333,0,0,0.26458333,-141.91275,53.563595)" />
         <polygon
            style="clip-rule:evenodd;opacity:1;fill:#0080ff;fill-rule:evenodd;enable-background:new"
            id="XMLID_45_"
            class="st1"
-           points="5,82.5 5,70 17.6,70 17.6,82.5 "
+           points="17.6,70 17.6,82.5 5,82.5 5,70 "
            transform="matrix(0.26458333,0,0,0.26458333,-141.91275,53.563595)" />
         <polygon
            style="clip-rule:evenodd;opacity:1;fill:#0080ff;fill-opacity:1;fill-rule:evenodd;enable-background:new"
            id="XMLID_47_"
            class="st1"
-           points="32.6,63 52.1,63 52.1,82.5 32.6,82.5 "
+           points="52.1,82.5 32.6,82.5 32.6,63 52.1,63 "
            transform="matrix(0.26458333,0,0,0.26458333,-141.91275,53.563595)" />
       </g>
     </g>
@@ -1055,7 +1055,7 @@
          x="98.837212"
          sodipodi:role="line">0.2</tspan><tspan
          style="font-size:7.05555582px;text-align:start;text-anchor:start;stroke-width:0.14277616"
-         y="105.55593"
+         y="105.51888"
          x="98.837212"
          sodipodi:role="line"
          id="tspan10009" /></text>
@@ -2852,7 +2852,7 @@
          id="tspan18236"
          x="-16.646379"
          y="-8.7827463"
-         style="fill:#ff0000;stroke-width:0.26458332">API + dashboard</tspan></text>
+         style="font-size:7.05555534px;fill:#ff0000;stroke-width:0.26458332">API + dashboard</tspan></text>
     <g
        id="g18637"
        transform="matrix(0.17857904,0,0,0.17857904,-136.99256,67.359967)">

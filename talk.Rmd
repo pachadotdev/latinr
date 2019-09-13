@@ -6,7 +6,7 @@ institute: "LatinR 2019"
 date: "Sep 27, 2019"
 output:
   xaringan::moon_reader:
-    css: ["kunoichi", "ninjutsu", "assets/custom.css"]
+    css: ["assets/kunoichi.css", "assets/ninjutsu.css", "assets/custom.css"]
     lib_dir: libs
     nature:
       ratio: "16:9"
@@ -89,7 +89,7 @@ After many emails I got a temporary access to download the raw data.
 The project has a major reproducibility flaw: You can reproduce the steps to
 obtain the curated data if you already have the raw data.
 
-<img src="images/cat.png" alt="cat" height="100%"/>
+<img src="images/cat.png" alt="cat" width="100%"/>
 
 ---
 
@@ -126,7 +126,7 @@ As a simple example, I shall compare three APIs by extracting what did Chile exp
 
 This shall be made by using common R packages:
 
-```{r echo=TRUE}
+```{r packages, echo=TRUE}
 library(jsonlite)
 library(dplyr)
 library(purrr)
@@ -148,7 +148,7 @@ library(purrr)
 
 ### Open Trade Statistics
 
-```{r echo=TRUE}
+```{r ots_api_1, echo=TRUE}
 # Function to read each combination reporter-partners
 read_from_ots <- function(p) {
   fromJSON(sprintf("https://api.tradestatistics.io/yrpc?y=2016&r=chl&p=%s", p))
@@ -168,7 +168,7 @@ ots_data <- map_df(partners, read_from_ots)
 
 ### Open Trade Statistics
 
-```{r}
+```{r ots_api_2}
 # Preview the data
 as_tibble(ots_data)
 ```
@@ -193,7 +193,7 @@ as_tibble(ots_data)
 
 ### Open Trade Statistics
 
-```{r echo=TRUE}
+```{r ots_api_3, echo=TRUE}
 # Product information
 products <- fromJSON("https://api.tradestatistics.io/products")
 
@@ -215,7 +215,7 @@ ots_data_2 <- ots_data %>%
 
 Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Bolivia and Perú.
 
-```{r}
+```{r ots_api_4}
 ots_data_2
 ```
 
@@ -235,7 +235,7 @@ ots_data_2
 
 ### The Observatory of Economic Complexity
 
-```{r echo=TRUE}
+```{r oec_api_1, echo=TRUE}
 # Function to read each combination reporter-partners
 read_from_oec <- function(p) {
   fromJSON(sprintf("https://atlas.media.mit.edu/hs07/export/2016/chl/%s/show/", p))
@@ -257,35 +257,17 @@ oec_data <- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$data
 
 ### The Observatory of Economic Complexity
 
-```{r}
+```{r oec_api_2}
 oec_data %>% 
   select(dest_id, hs07_id, hs07_id_len, export_val) %>% 
   as_tibble()
 ```
 
----
+Problems:
 
-## Comparison between APIs
-
-### The Observatory of Economic Complexity
-
-* At first sight the API returned many more rows than in the previous example.
-
-* To obtain the exact same result I'll need post-filtering at product code.
-
-* One curious column in the table above is `hs07_id_len`, and it reflects length of the HS code.
-
----
-
-## Comparison between APIs
-
-### The Observatory of Economic Complexity
-
-* If you need to join that table with official HS tables, for example, in case of having to append a column with product names, exactly zero of the codes above shall have match.
-
-* Among all HS codes, "7325" means "Iron or steel; cast articles", and that is an official code and name used by all customs in the world.
-
-* In the OEC case, their "157325" code is actually "7325" from the HS, because they append a "15" that stands for "product community #15, metals".
+* Post-filtering is required at `hs07_id` as there are mixed length HS codes
+* There are no 8 digits HS codes!
+* Here 6 digits means 4 digits and 8 means 6
 
 ---
 
@@ -295,13 +277,23 @@ oec_data %>%
 
 Let's filter with this consideration in mind:
 
-```{r}
+```{r oec_api_3, echo=TRUE}
 # Remember that this is a "false 6", and is a "4" actually
-oec_data %>%
+oec_data_2 <- oec_data %>%
   filter(hs07_id_len == 6) %>% 
-  mutate(hs07_id = substr(hs07_id, 2, 6)) %>% 
+  mutate(hs07_id = substr(hs07_id, 3, 6)) %>% 
   select(dest_id, hs07_id, export_val) %>% 
   as_tibble()
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+```{r oec_api_4}
+oec_data_2
 ```
 
 ---
@@ -336,7 +328,7 @@ oec_data %>%
 
 ### The Atlas of Economic Complexity
 
-```{r echo=TRUE}
+```{r aec_api_1, echo=TRUE}
 # Function to read each combination reporter-partners
 read_from_atlas <- function(p) {
   fromJSON(sprintf("http://atlas.cid.harvard.edu/api/data/location/42/hs_products_by_partner/%s/?level=4digit", p))
@@ -358,23 +350,17 @@ atlas_data <- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_data[[
 
 ### The Atlas of Economic Complexity
 
-```{r}
+```{r aec_api_2}
 atlas_data %>% 
   select(year, partner_id, product_id, export_value) %>% 
   as_tibble()
 ```
 
----
-
-## Comparison between APIs
-
-### The Atlas of Economic Complexity
-
-* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
-
-* Some scraping indicates that the `product_id` is linked to HS codes.
+Problems:
 
 * Post-filtering is required at year as there are more years than what was requested.
+* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
+* Some scraping indicates that the `product_id` is linked to HS codes.
 
 ---
 
@@ -382,7 +368,7 @@ atlas_data %>%
 
 ### The Atlas of Economic Complexity
 
-```{r echo=TRUE}
+```{r aec_api_3, echo=TRUE}
 atlas_id_to_hs <- fromJSON("http://atlas.cid.harvard.edu/api/metadata/hs_product/")
 atlas_id_to_hs <- atlas_id_to_hs$data %>% select(id, code)
 
@@ -400,7 +386,7 @@ atlas_data_2 <- atlas_data %>%
 
 ### The Atlas of Economic Complexity
 
-```{r}
+```{r aec_api_4}
 atlas_data_2 %>%
   filter(year == 2016) %>% 
   select(code.y, code.x, export_value) %>% 
@@ -441,7 +427,7 @@ pacman::p_load(tradestatistics)
 
 Fiji exports a lot of water. But how much of its exports to the US are actually water?
 
-```{r echo=TRUE}
+```{r ts_1, echo=TRUE}
 library(dplyr)
 library(tradestatistics)
 
@@ -455,7 +441,7 @@ fji_usa <- ots_create_tidy_data(
 
 ## R package
 
-```{r}
+```{r ts_2}
 fji_usa %>% 
   select(product_shortname_english, export_value_usd) %>% 
   arrange(-export_value_usd) %>% 
@@ -469,7 +455,7 @@ fji_usa %>%
 
 Which country from America is the #1 partner with the European Union (EU-28)?
 
-```{r echo=TRUE}
+```{r ts_3, echo=TRUE}
 ame <- ots_countries %>% 
   filter(continent == "Americas") %>% 
   select(country_iso)
@@ -491,7 +477,7 @@ ame_eu28_2 <- ame_eu28 %>%
 
 ---
 
-```{r}
+```{r ts_4}
 ame_eu28_2
 ```
 

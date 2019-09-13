@@ -4,9 +4,9 @@
     <title>Open Trade Statistics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pachá" />
-    <link href="libs/remark-css-0.0.1/kunoichi.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets\kunoichi.css" type="text/css" />
+    <link rel="stylesheet" href="assets\ninjutsu.css" type="text/css" />
+    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -93,7 +93,7 @@ After many emails I got a temporary access to download the raw data.
 The project has a major reproducibility flaw: You can reproduce the steps to
 obtain the curated data if you already have the raw data.
 
-&lt;img src="images/cat.png" alt="cat" height="100%"/&gt;
+&lt;img src="images/cat.png" alt="cat" width="100%"/&gt;
 
 ---
 
@@ -177,7 +177,7 @@ ots_data &lt;- map_df(partners, read_from_ots)
 
 ```
 ## # A tibble: 2,768 x 15
-##     year reporter_iso partner_iso product_code product_code_le…
+##     year reporter_iso partner_iso product_code product_code_le~
 ##    &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                   &lt;int&gt;
 ##  1  2016 chl          arg         0101                        4
 ##  2  2016 chl          arg         0106                        4
@@ -189,7 +189,7 @@ ots_data &lt;- map_df(partners, read_from_ots)
 ##  8  2016 chl          arg         0302                        4
 ##  9  2016 chl          arg         0303                        4
 ## 10  2016 chl          arg         0304                        4
-## # … with 2,758 more rows, and 10 more variables: export_value_usd &lt;int&gt;,
+## # ... with 2,758 more rows, and 10 more variables: export_value_usd &lt;int&gt;,
 ## #   import_value_usd &lt;int&gt;, export_value_usd_change_1_year &lt;int&gt;,
 ## #   export_value_usd_change_5_years &lt;int&gt;,
 ## #   export_value_usd_percentage_change_1_year &lt;dbl&gt;,
@@ -315,32 +315,14 @@ oec_data &lt;- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$d
 ##  8 saarg   010202             6        NA 
 ##  9 saarg   01020230           8        NA 
 ## 10 saarg   010204             6        NA 
-## # … with 9,923 more rows
+## # ... with 9,923 more rows
 ```
 
----
+Problems:
 
-## Comparison between APIs
-
-### The Observatory of Economic Complexity
-
-* At first sight the API returned many more rows than in the previous example.
-
-* To obtain the exact same result I'll need post-filtering at product code.
-
-* One curious column in the table above is `hs07_id_len`, and it reflects length of the HS code.
-
----
-
-## Comparison between APIs
-
-### The Observatory of Economic Complexity
-
-* If you need to join that table with official HS tables, for example, in case of having to append a column with product names, exactly zero of the codes above shall have match.
-
-* Among all HS codes, "7325" means "Iron or steel; cast articles", and that is an official code and name used by all customs in the world.
-
-* In the OEC case, their "157325" code is actually "7325" from the HS, because they append a "15" that stands for "product community #15, metals".
+* Post-filtering is required at `hs07_id` as there are mixed length HS codes
+* There are no 8 digits HS codes!
+* Here 6 digits means 4 digits and 8 means 6
 
 ---
 
@@ -351,21 +333,37 @@ oec_data &lt;- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$d
 Let's filter with this consideration in mind:
 
 
+```r
+# Remember that this is a "false 6", and is a "4" actually
+oec_data_2 &lt;- oec_data %&gt;%
+  filter(hs07_id_len == 6) %&gt;% 
+  mutate(hs07_id = substr(hs07_id, 3, 6)) %&gt;% 
+  select(dest_id, hs07_id, export_val) %&gt;% 
+  as_tibble()
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+
 ```
 ## # A tibble: 2,565 x 3
 ##    dest_id hs07_id export_val
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
-##  1 saarg   10101      455453.
-##  2 saarg   10106          NA 
-##  3 saarg   10201          NA 
-##  4 saarg   10202          NA 
-##  5 saarg   10204          NA 
-##  6 saarg   10206          NA 
-##  7 saarg   10207          NA 
-##  8 saarg   10302    36718891.
-##  9 saarg   10303      211295.
-## 10 saarg   10304    15793369.
-## # … with 2,555 more rows
+##  1 saarg   0101       455453.
+##  2 saarg   0106           NA 
+##  3 saarg   0201           NA 
+##  4 saarg   0202           NA 
+##  5 saarg   0204           NA 
+##  6 saarg   0206           NA 
+##  7 saarg   0207           NA 
+##  8 saarg   0302     36718891.
+##  9 saarg   0303       211295.
+## 10 saarg   0304     15793369.
+## # ... with 2,555 more rows
 ```
 
 ---
@@ -438,20 +436,14 @@ atlas_data &lt;- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_dat
 ##  8  2002          8        650       191069
 ##  9  2003          8        650        89214
 ## 10  2004          8        650       242463
-## # … with 62,949 more rows
+## # ... with 62,949 more rows
 ```
 
----
-
-## Comparison between APIs
-
-### The Atlas of Economic Complexity
-
-* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
-
-* Some scraping indicates that the `product_id` is linked to HS codes.
+Problems:
 
 * Post-filtering is required at year as there are more years than what was requested.
+* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
+* Some scraping indicates that the `product_id` is linked to HS codes.
 
 ---
 
@@ -493,7 +485,7 @@ atlas_data_2 &lt;- atlas_data %&gt;%
 ##  8 ARG    0302       34514964
 ##  9 ARG    0303         214817
 ## 10 ARG    0304       14997462
-## # … with 2,695 more rows
+## # ... with 2,695 more rows
 ```
 
 ---
@@ -607,7 +599,7 @@ ame_eu28_2 &lt;- ame_eu28 %&gt;%
 ##  8 col                8121711873
 ##  9 cri                3921645052
 ## 10 ecu                3916982906
-## # … with 45 more rows
+## # ... with 45 more rows
 ```
 
 ---
