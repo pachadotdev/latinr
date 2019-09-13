@@ -1,0 +1,528 @@
+---
+title: "Open Trade Statistics"
+subtitle: "Reproducible research + tidy trade data"
+author: "Pach\u00e1"
+institute: "LatinR 2019"
+date: "Sep 27, 2019"
+output:
+  xaringan::moon_reader:
+    css: ["kunoichi", "ninjutsu", "assets/custom.css"]
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+## Contents of the talk
+
+* Introduction
+* API
+* R Package
+* Dashboard
+* Code and documentation
+
+---
+
+## Where to reach me
+
+**Twitter and Github: `pachamaltese`**
+
+**Email: `m vargas at dcc dot uchile dot cl`**
+
+**Phone: `+1 XXX XXX XX XX or +56 X X XXX XX XX`**
+
+---
+
+# Introduction
+
+---
+
+## Introduction
+
+* [Open Trade Statistics](https://tradestatistics.io) (OTS) was created with the intention to lower the barrier to working with international economic trade data.
+
+* It includes a public API, a dashboard, and an R package for data retrieval.
+
+* The project started when I was affected by the fact that many Latin American Universities have limited or no access to the [United Nations Commodity Trade Statistics Database](https://comtrade.un.org/) (UN COMTRADE).
+
+---
+
+## Introduction
+
+* There are alternatives to COMTRADE.
+
+* Example: The [Base Pour L'Analyse du Commerce International](http://www.cepii.fr/CEPII/en/bdd_modele/presentation.asp?id=1) (BACI).
+
+* BACI remarkables: It is constructed using the raw data and a method that reconciles the declarations of the exporter and the importer.
+
+* You need UN COMTRADE institutional paid access to access BACI.
+
+---
+
+## Introduction
+
+* I contacted UN COMTRADE.
+
+* My proposal was to do something similar to BACI but available for anyone.
+
+* COMTRADE agreed as long as it kept commercial purposes out of the scope of the project.
+
+---
+
+## Introduction
+
+After many emails I got a temporary access to download the raw data.
+
+<img src="images/comtrade.png" alt="comtrade" height="100%"/>
+
+---
+
+## Introduction
+
+The project has a major reproducibility flaw: You can reproduce the steps to
+obtain the curated data if you already have the raw data.
+
+<img src="images/cat.png" alt="cat" height="100%"/>
+
+---
+
+## Introduction
+
+Hardware and software stack
+
+<img src="images/stack.svg" alt="stack" width="100%"/>
+
+---
+
+# API
+
+---
+
+## Comparison between APIs
+
+Similar projects:
+
+* [The Atlas of Economic complexity](http://atlas.cid.harvard.edu/)
+* [The Obervatory of Economic complexity](http://atlas.media.mit.edu/)
+
+Both use UN COMTRADE data and focus on data visualization to answer questions like:
+
+* Who imported Electronics in 1980?
+* Who exported Refined Copper in 1990?
+* Where did Chile export Wine to in 2016?
+
+---
+
+## Comparison between APIs
+
+As a simple example, I shall compare three APIs by extracting what did Chile export to Argentina, Bolivia and Perú in 2016.
+
+This shall be made by using common R packages:
+
+```{r echo=TRUE}
+library(jsonlite)
+library(dplyr)
+library(purrr)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+* docs.tradestatistics.io has fully detailed explanations to use the API
+
+* In case of not knowing the ISO codes for the country of origin or destination, I can check api.tradestatistics.io/countries and inspect it from the browser.
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+```{r echo=TRUE}
+# Function to read each combination reporter-partners
+read_from_ots <- function(p) {
+  fromJSON(sprintf("https://api.tradestatistics.io/yrpc?y=2016&r=chl&p=%s", p))
+}
+
+# The ISO codes are here: https://api.tradestatistics.io/countries
+partners <- c("arg", "bol", "per")
+
+# Now with purrr I can combine the three resulting datasets
+# Chile-Argentina, Chile-Bolivia, and Chile-Perú
+ots_data <- map_df(partners, read_from_ots)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+```{r}
+# Preview the data
+as_tibble(ots_data)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+* I got tidy data but I still cannot answer the original question.
+
+* I can use the API again to join two tables.
+
+* I'll obtain the product information and then I'll group the data by groups of products.
+
+* The answer has to be *informative*
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+```{r echo=TRUE}
+# Product information
+products <- fromJSON("https://api.tradestatistics.io/products")
+
+# Join the two tables and then summarise by product group
+# This will condense the original table into something more compact
+# and even probably more informative
+ots_data_2 <- ots_data %>%
+  left_join(products, by = "product_code") %>%
+  group_by(group_name) %>%
+  summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %>%
+  arrange(-export_value_usd)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Bolivia and Perú.
+
+```{r}
+ots_data_2
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* This API is documented at atlas.media.mit.edu/api.
+
+* I'll try to replicate the result from OTS API.
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+```{r echo=TRUE}
+# Function to read each combination reporter-partners
+read_from_oec <- function(p) {
+  fromJSON(sprintf("https://atlas.media.mit.edu/hs07/export/2016/chl/%s/show/", p))
+}
+
+# From their documentation I can infer their links use ISO codes for countries,
+# so I'll use the same codes from the previous example
+destination <- c("arg", "bol", "per")
+
+# One problem here is that the API returns a nested JSON that doesn't work with map_df
+# I can obtain the same result with map and bind_rows
+oec_data <- map(destination, read_from_oec)
+oec_data <- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$data)
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+```{r}
+oec_data %>% 
+  select(dest_id, hs07_id, hs07_id_len, export_val) %>% 
+  as_tibble()
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* At first sight the API returned many more rows than in the previous example.
+
+* To obtain the exact same result I'll need post-filtering at product code.
+
+* One curious column in the table above is `hs07_id_len`, and it reflects length of the HS code.
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* If you need to join that table with official HS tables, for example, in case of having to append a column with product names, exactly zero of the codes above shall have match.
+
+* Among all HS codes, "7325" means "Iron or steel; cast articles", and that is an official code and name used by all customs in the world.
+
+* In the OEC case, their "157325" code is actually "7325" from the HS, because they append a "15" that stands for "product community #15, metals".
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+Let's filter with this consideration in mind:
+
+```{r}
+# Remember that this is a "false 6", and is a "4" actually
+oec_data %>%
+  filter(hs07_id_len == 6) %>% 
+  mutate(hs07_id = substr(hs07_id, 2, 6)) %>% 
+  select(dest_id, hs07_id, export_val) %>% 
+  as_tibble()
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+* I couldn't find documentation for this API
+
+* Still I'll try to replicate the result from OTS API (I obtained the URL by using Firefox inspector at their website
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+<img src="images/atlas.png" alt="atlas" width="100%"/>
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+<img src="images/atlas2.png" alt="atlas2" width="100%"/>
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+```{r echo=TRUE}
+# Function to read each combination reporter-partners
+read_from_atlas <- function(p) {
+  fromJSON(sprintf("http://atlas.cid.harvard.edu/api/data/location/42/hs_products_by_partner/%s/?level=4digit", p))
+}
+
+# Getting to know these codes required web scraping from http://atlas.cid.harvard.edu/explore
+# These codes don't follow UN COMTRADE numeric codes with are an alternative to ISO codes
+destination <- c("8", "31", "173")
+
+# The resulting JSON doesn't work with map_df either
+# This can still be combined without much hassle
+atlas_data <- map(destination, read_from_atlas)
+atlas_data <- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_data[[3]]$data)
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+```{r}
+atlas_data %>% 
+  select(year, partner_id, product_id, export_value) %>% 
+  as_tibble()
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
+
+* Some scraping indicates that the `product_id` is linked to HS codes.
+
+* Post-filtering is required at year as there are more years than what was requested.
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+```{r echo=TRUE}
+atlas_id_to_hs <- fromJSON("http://atlas.cid.harvard.edu/api/metadata/hs_product/")
+atlas_id_to_hs <- atlas_id_to_hs$data %>% select(id, code)
+
+atlas_id_to_iso <- fromJSON("http://atlas.cid.harvard.edu/api/metadata/location/")
+atlas_id_to_iso <- atlas_id_to_iso$data %>% select(id, code)
+
+atlas_data_2 <- atlas_data %>% 
+  left_join(atlas_id_to_hs, by = c("product_id" = "id")) %>% 
+  left_join(atlas_id_to_iso, by = c("partner_id" = "id"))
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+```{r}
+atlas_data_2 %>%
+  filter(year == 2016) %>% 
+  select(code.y, code.x, export_value) %>% 
+  as_tibble()
+```
+
+---
+
+# R package
+
+---
+
+## R package
+
+Let's go easy
+
+```r
+# easy start
+install.packages("tradestatistics")
+```
+
+---
+
+## R package
+
+With more time we should have done (but it requires `devtools` and more, and I don't want
+you to spend the rest of the presentation installing packages)
+
+```r
+# reproducible start
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tradestatistics)
+```
+
+---
+
+## R package
+
+Fiji exports a lot of water. But how much of its exports to the US are actually water?
+
+```{r echo=TRUE}
+library(dplyr)
+library(tradestatistics)
+
+fji_usa <- ots_create_tidy_data(
+  years = 2017, reporters = "fji", partners = "usa",
+  include_shortnames = T
+)
+```
+
+---
+
+## R package
+
+```{r}
+fji_usa %>% 
+  select(product_shortname_english, export_value_usd) %>% 
+  arrange(-export_value_usd) %>% 
+  mutate(export_value_share = round(100 * export_value_usd /
+                                      sum(export_value_usd, na.rm = T), 2))
+```
+
+---
+
+## R package
+
+Which country from America is the #1 partner with the European Union (EU-28)?
+
+```{r echo=TRUE}
+ame <- ots_countries %>% 
+  filter(continent == "Americas") %>% 
+  select(country_iso)
+
+eu28 <- ots_countries %>% 
+  filter(eu28_member == 1) %>% 
+  select(country_iso)
+
+ame_eu28 <- ots_create_tidy_data(
+  years = 2017, reporters = ame$country_iso, partners = eu28$country_iso,
+  table = "yrp"
+)
+
+ame_eu28_2 <- ame_eu28 %>% 
+  group_by(reporter_iso) %>% 
+  summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %>% 
+  arrange(-export_value_usd)
+```
+
+---
+
+```{r}
+ame_eu28_2
+```
+
+---
+
+# Dashboard
+
+---
+
+## Dashboard
+
+shiny.tradestatistics.io
+
+---
+
+## Code and documentation
+
+**github.com/tradestatistics**
+
+**docs.ropensci.org/tradestatistics**
+
+**tradestatistics.io**
+
+---
+
+## Acknowledgements
+
+* rOpenSci <3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
+* DigitalOcean: Danny
+* Unaffiliated: Joshua and Erasmo
+
+---
+
+# Thanks for your attention!

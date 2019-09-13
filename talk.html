@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Open Trade Statistics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Pachá" />
+    <link href="libs/remark-css-0.0.1/kunoichi.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Open Trade Statistics
+## Reproducible research + tidy trade data
+### Pachá
+### LatinR 2019
+### Sep 27, 2019
+
+---
+
+
+
+
+
+## Contents of the talk
+
+* Introduction
+* API
+* R Package
+* Dashboard
+* Code and documentation
+
+---
+
+## Where to reach me
+
+**Twitter and Github: `pachamaltese`**
+
+**Email: `m vargas at dcc dot uchile dot cl`**
+
+**Phone: `+1 XXX XXX XX XX or +56 X X XXX XX XX`**
+
+---
+
+# Introduction
+
+---
+
+## Introduction
+
+* [Open Trade Statistics](https://tradestatistics.io) (OTS) was created with the intention to lower the barrier to working with international economic trade data.
+
+* It includes a public API, a dashboard, and an R package for data retrieval.
+
+* The project started when I was affected by the fact that many Latin American Universities have limited or no access to the [United Nations Commodity Trade Statistics Database](https://comtrade.un.org/) (UN COMTRADE).
+
+---
+
+## Introduction
+
+* There are alternatives to COMTRADE.
+
+* Example: The [Base Pour L'Analyse du Commerce International](http://www.cepii.fr/CEPII/en/bdd_modele/presentation.asp?id=1) (BACI).
+
+* BACI remarkables: It is constructed using the raw data and a method that reconciles the declarations of the exporter and the importer.
+
+* You need UN COMTRADE institutional paid access to access BACI.
+
+---
+
+## Introduction
+
+* I contacted UN COMTRADE.
+
+* My proposal was to do something similar to BACI but available for anyone.
+
+* COMTRADE agreed as long as it kept commercial purposes out of the scope of the project.
+
+---
+
+## Introduction
+
+After many emails I got a temporary access to download the raw data.
+
+&lt;img src="images/comtrade.png" alt="comtrade" height="100%"/&gt;
+
+---
+
+## Introduction
+
+The project has a major reproducibility flaw: You can reproduce the steps to
+obtain the curated data if you already have the raw data.
+
+&lt;img src="images/cat.png" alt="cat" height="100%"/&gt;
+
+---
+
+## Introduction
+
+Hardware and software stack
+
+&lt;img src="images/stack.svg" alt="stack" width="100%"/&gt;
+
+---
+
+# API
+
+---
+
+## Comparison between APIs
+
+Similar projects:
+
+* [The Atlas of Economic complexity](http://atlas.cid.harvard.edu/)
+* [The Obervatory of Economic complexity](http://atlas.media.mit.edu/)
+
+Both use UN COMTRADE data and focus on data visualization to answer questions like:
+
+* Who imported Electronics in 1980?
+* Who exported Refined Copper in 1990?
+* Where did Chile export Wine to in 2016?
+
+---
+
+## Comparison between APIs
+
+As a simple example, I shall compare three APIs by extracting what did Chile export to Argentina, Bolivia and Perú in 2016.
+
+This shall be made by using common R packages:
+
+
+```r
+library(jsonlite)
+library(dplyr)
+library(purrr)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+* docs.tradestatistics.io has fully detailed explanations to use the API
+
+* In case of not knowing the ISO codes for the country of origin or destination, I can check api.tradestatistics.io/countries and inspect it from the browser.
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+
+```r
+# Function to read each combination reporter-partners
+read_from_ots &lt;- function(p) {
+  fromJSON(sprintf("https://api.tradestatistics.io/yrpc?y=2016&amp;r=chl&amp;p=%s", p))
+}
+
+# The ISO codes are here: https://api.tradestatistics.io/countries
+partners &lt;- c("arg", "bol", "per")
+
+# Now with purrr I can combine the three resulting datasets
+# Chile-Argentina, Chile-Bolivia, and Chile-Perú
+ots_data &lt;- map_df(partners, read_from_ots)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+
+```
+## # A tibble: 2,768 x 15
+##     year reporter_iso partner_iso product_code product_code_le…
+##    &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                   &lt;int&gt;
+##  1  2016 chl          arg         0101                        4
+##  2  2016 chl          arg         0106                        4
+##  3  2016 chl          arg         0201                        4
+##  4  2016 chl          arg         0202                        4
+##  5  2016 chl          arg         0204                        4
+##  6  2016 chl          arg         0206                        4
+##  7  2016 chl          arg         0207                        4
+##  8  2016 chl          arg         0302                        4
+##  9  2016 chl          arg         0303                        4
+## 10  2016 chl          arg         0304                        4
+## # … with 2,758 more rows, and 10 more variables: export_value_usd &lt;int&gt;,
+## #   import_value_usd &lt;int&gt;, export_value_usd_change_1_year &lt;int&gt;,
+## #   export_value_usd_change_5_years &lt;int&gt;,
+## #   export_value_usd_percentage_change_1_year &lt;dbl&gt;,
+## #   export_value_usd_percentage_change_5_years &lt;dbl&gt;,
+## #   import_value_usd_change_1_year &lt;int&gt;,
+## #   import_value_usd_change_5_years &lt;int&gt;,
+## #   import_value_usd_percentage_change_1_year &lt;dbl&gt;,
+## #   import_value_usd_percentage_change_5_years &lt;dbl&gt;
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+* I got tidy data but I still cannot answer the original question.
+
+* I can use the API again to join two tables.
+
+* I'll obtain the product information and then I'll group the data by groups of products.
+
+* The answer has to be *informative*
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+
+```r
+# Product information
+products &lt;- fromJSON("https://api.tradestatistics.io/products")
+
+# Join the two tables and then summarise by product group
+# This will condense the original table into something more compact
+# and even probably more informative
+ots_data_2 &lt;- ots_data %&gt;%
+  left_join(products, by = "product_code") %&gt;%
+  group_by(group_name) %&gt;%
+  summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %&gt;%
+  arrange(-export_value_usd)
+```
+
+---
+
+## Comparison between APIs
+
+### Open Trade Statistics
+
+Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Bolivia and Perú.
+
+
+```
+## # A tibble: 97 x 2
+##    group_name                                              export_value_usd
+##    &lt;chr&gt;                                                              &lt;int&gt;
+##  1 Vehicles; other than railway or tramway rolling stock,~        443991155
+##  2 Nuclear reactors, boilers, machinery and mechanical ap~        325689291
+##  3 Electrical machinery and equipment and parts thereof; ~        179255930
+##  4 Plastics and articles thereof                                  171601886
+##  5 Mineral fuels, mineral oils and products of their dist~        159328756
+##  6 Iron or steel articles                                         152820725
+##  7 Miscellaneous edible preparations                              149430229
+##  8 Paper and paperboard; articles of paper pulp, of paper~        148626034
+##  9 Fruit and nuts, edible; peel of citrus fruit or melons         138431920
+## 10 Wood and articles of wood; wood charcoal                       113002115
+## # ... with 87 more rows
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* This API is documented at atlas.media.mit.edu/api.
+
+* I'll try to replicate the result from OTS API.
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+
+```r
+# Function to read each combination reporter-partners
+read_from_oec &lt;- function(p) {
+  fromJSON(sprintf("https://atlas.media.mit.edu/hs07/export/2016/chl/%s/show/", p))
+}
+
+# From their documentation I can infer their links use ISO codes for countries,
+# so I'll use the same codes from the previous example
+destination &lt;- c("arg", "bol", "per")
+
+# One problem here is that the API returns a nested JSON that doesn't work with map_df
+# I can obtain the same result with map and bind_rows
+oec_data &lt;- map(destination, read_from_oec)
+oec_data &lt;- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$data)
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+
+```
+## # A tibble: 9,933 x 4
+##    dest_id hs07_id  hs07_id_len export_val
+##    &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+##  1 saarg   010101             6    455453.
+##  2 saarg   01010110           8    100653.
+##  3 saarg   01010190           8    354799.
+##  4 saarg   010106             6        NA 
+##  5 saarg   01010619           8        NA 
+##  6 saarg   010201             6        NA 
+##  7 saarg   01020130           8        NA 
+##  8 saarg   010202             6        NA 
+##  9 saarg   01020230           8        NA 
+## 10 saarg   010204             6        NA 
+## # … with 9,923 more rows
+```
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* At first sight the API returned many more rows than in the previous example.
+
+* To obtain the exact same result I'll need post-filtering at product code.
+
+* One curious column in the table above is `hs07_id_len`, and it reflects length of the HS code.
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+* If you need to join that table with official HS tables, for example, in case of having to append a column with product names, exactly zero of the codes above shall have match.
+
+* Among all HS codes, "7325" means "Iron or steel; cast articles", and that is an official code and name used by all customs in the world.
+
+* In the OEC case, their "157325" code is actually "7325" from the HS, because they append a "15" that stands for "product community #15, metals".
+
+---
+
+## Comparison between APIs
+
+### The Observatory of Economic Complexity
+
+Let's filter with this consideration in mind:
+
+
+```
+## # A tibble: 2,565 x 3
+##    dest_id hs07_id export_val
+##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
+##  1 saarg   10101      455453.
+##  2 saarg   10106          NA 
+##  3 saarg   10201          NA 
+##  4 saarg   10202          NA 
+##  5 saarg   10204          NA 
+##  6 saarg   10206          NA 
+##  7 saarg   10207          NA 
+##  8 saarg   10302    36718891.
+##  9 saarg   10303      211295.
+## 10 saarg   10304    15793369.
+## # … with 2,555 more rows
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+* I couldn't find documentation for this API
+
+* Still I'll try to replicate the result from OTS API (I obtained the URL by using Firefox inspector at their website
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+&lt;img src="images/atlas.png" alt="atlas" width="100%"/&gt;
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+&lt;img src="images/atlas2.png" alt="atlas2" width="100%"/&gt;
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+
+```r
+# Function to read each combination reporter-partners
+read_from_atlas &lt;- function(p) {
+  fromJSON(sprintf("http://atlas.cid.harvard.edu/api/data/location/42/hs_products_by_partner/%s/?level=4digit", p))
+}
+
+# Getting to know these codes required web scraping from http://atlas.cid.harvard.edu/explore
+# These codes don't follow UN COMTRADE numeric codes with are an alternative to ISO codes
+destination &lt;- c("8", "31", "173")
+
+# The resulting JSON doesn't work with map_df either
+# This can still be combined without much hassle
+atlas_data &lt;- map(destination, read_from_atlas)
+atlas_data &lt;- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_data[[3]]$data)
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+
+```
+## # A tibble: 62,959 x 4
+##     year partner_id product_id export_value
+##    &lt;int&gt;      &lt;int&gt;      &lt;int&gt;        &lt;int&gt;
+##  1  1995          8        650        23207
+##  2  1996          8        650       152075
+##  3  1997          8        650       131174
+##  4  1998          8        650        64352
+##  5  1999          8        650        78678
+##  6  2000          8        650        85993
+##  7  2001          8        650       500513
+##  8  2002          8        650       191069
+##  9  2003          8        650        89214
+## 10  2004          8        650       242463
+## # … with 62,949 more rows
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
+
+* Some scraping indicates that the `product_id` is linked to HS codes.
+
+* Post-filtering is required at year as there are more years than what was requested.
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+
+```r
+atlas_id_to_hs &lt;- fromJSON("http://atlas.cid.harvard.edu/api/metadata/hs_product/")
+atlas_id_to_hs &lt;- atlas_id_to_hs$data %&gt;% select(id, code)
+
+atlas_id_to_iso &lt;- fromJSON("http://atlas.cid.harvard.edu/api/metadata/location/")
+atlas_id_to_iso &lt;- atlas_id_to_iso$data %&gt;% select(id, code)
+
+atlas_data_2 &lt;- atlas_data %&gt;% 
+  left_join(atlas_id_to_hs, by = c("product_id" = "id")) %&gt;% 
+  left_join(atlas_id_to_iso, by = c("partner_id" = "id"))
+```
+
+---
+
+## Comparison between APIs
+
+### The Atlas of Economic Complexity
+
+
+```
+## # A tibble: 2,705 x 3
+##    code.y code.x export_value
+##    &lt;chr&gt;  &lt;chr&gt;         &lt;int&gt;
+##  1 ARG    0101         472353
+##  2 ARG    0106              0
+##  3 ARG    0201              0
+##  4 ARG    0202              0
+##  5 ARG    0204              0
+##  6 ARG    0206              0
+##  7 ARG    0207              0
+##  8 ARG    0302       34514964
+##  9 ARG    0303         214817
+## 10 ARG    0304       14997462
+## # … with 2,695 more rows
+```
+
+---
+
+# R package
+
+---
+
+## R package
+
+Let's go easy
+
+```r
+# easy start
+install.packages("tradestatistics")
+```
+
+---
+
+## R package
+
+With more time we should have done (but it requires `devtools` and more, and I don't want
+you to spend the rest of the presentation installing packages)
+
+```r
+# reproducible start
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tradestatistics)
+```
+
+---
+
+## R package
+
+Fiji exports a lot of water. But how much of its exports to the US are actually water?
+
+
+```r
+library(dplyr)
+library(tradestatistics)
+
+fji_usa &lt;- ots_create_tidy_data(
+  years = 2017, reporters = "fji", partners = "usa",
+  include_shortnames = T
+)
+```
+
+---
+
+## R package
+
+
+```
+## # A tibble: 736 x 3
+##    product_shortname_english export_value_usd export_value_share
+##    &lt;chr&gt;                                &lt;int&gt;              &lt;dbl&gt;
+##  1 Water                            233431002              60   
+##  2 Processed Fish                    61666883              15.8 
+##  3 Non-fillet Fresh Fish             18503975               4.76
+##  4 Raw Sugar                         12600118               3.24
+##  5 Broadcasting Equipment            10967992               2.82
+##  6 Perfume Plants                     7273321               1.87
+##  7 Fish Fillets                       5540948               1.42
+##  8 Unspecified                        4246687               1.09
+##  9 Non-fillet Frozen Fish             4033516               1.04
+## 10 Molasses                           3578212               0.92
+## # ... with 726 more rows
+```
+
+---
+
+## R package
+
+Which country from America is the #1 partner with the European Union (EU-28)?
+
+
+```r
+ame &lt;- ots_countries %&gt;% 
+  filter(continent == "Americas") %&gt;% 
+  select(country_iso)
+
+eu28 &lt;- ots_countries %&gt;% 
+  filter(eu28_member == 1) %&gt;% 
+  select(country_iso)
+
+ame_eu28 &lt;- ots_create_tidy_data(
+  years = 2017, reporters = ame$country_iso, partners = eu28$country_iso,
+  table = "yrp"
+)
+
+ame_eu28_2 &lt;- ame_eu28 %&gt;% 
+  group_by(reporter_iso) %&gt;% 
+  summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %&gt;% 
+  arrange(-export_value_usd)
+```
+
+---
+
+
+```
+## # A tibble: 55 x 2
+##    reporter_iso export_value_usd
+##    &lt;chr&gt;                   &lt;dbl&gt;
+##  1 usa              406477601339
+##  2 can               51171106581
+##  3 bra               45028034231
+##  4 mex               34396737203
+##  5 chl               10935603926
+##  6 arg               10870865924
+##  7 per                8373780023
+##  8 col                8121711873
+##  9 cri                3921645052
+## 10 ecu                3916982906
+## # … with 45 more rows
+```
+
+---
+
+# Dashboard
+
+---
+
+## Dashboard
+
+shiny.tradestatistics.io
+
+---
+
+## Code and documentation
+
+**github.com/tradestatistics**
+
+**docs.ropensci.org/tradestatistics**
+
+**tradestatistics.io**
+
+---
+
+## Acknowledgements
+
+* rOpenSci &lt;3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
+* DigitalOcean: Danny
+* Unaffiliated: Joshua and Erasmo
+
+---
+
+# Thanks for your attention!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
