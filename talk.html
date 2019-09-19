@@ -4,9 +4,9 @@
     <title>Open Trade Statistics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pachá" />
-    <link rel="stylesheet" href="assets\kunoichi.css" type="text/css" />
-    <link rel="stylesheet" href="assets\ninjutsu.css" type="text/css" />
-    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets/kunoichi.css" type="text/css" />
+    <link rel="stylesheet" href="assets/ninjutsu.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -105,6 +105,64 @@ Hardware and software stack
 
 ---
 
+## Introduction
+
+The next three slides are an *oversimplification* just to explain the work in
+wide terms.
+
+---
+
+## Introduction
+
+The raw data contains missing flows and the data is not tidy data:
+
+&lt;img src="images/flows1.svg" alt="stack" width="100%"/&gt;
+
+---
+
+## Introduction
+
+We can patch this applying some articles:
+
+&lt;img src="images/flows2.svg" alt="stack" width="100%"/&gt;
+
+---
+
+## Introduction
+
+Customs have changed their coding systems in order to reflect changes
+in exported products (i.e. in 1960 nobody exported laptops).
+
+&lt;img src="images/productcodes.svg" alt="stack" width="100%"/&gt;
+
+---
+
+## Introduction
+
+* We have 2018 data, similar initiatives have datasets updated to 2016 or 2017.
+* But *much* more important than that, we converted all years to HS rev 2007 to
+allow time comparisons.
+
+---
+
+## Introduction
+
+The HS consists in nested codes. This is important as it allow to
+convert between classifications:
+
+&lt;img src="images/productcodes2.svg" alt="stack" width="100%"/&gt;
+
+---
+
+## Introduction
+
+Product code conversion is far from a 1-to-1 map. The solution is an
+intrincate `group_by() + left_join()`:
+
+&lt;img src="images/productcodes3.svg" alt="stack" width="100%"/&gt;
+
+---
+
 # API
 
 ---
@@ -176,28 +234,20 @@ ots_data &lt;- map_df(partners, read_from_ots)
 
 
 ```
-## # A tibble: 2,768 x 15
-##     year reporter_iso partner_iso product_code product_code_le~
+## # A tibble: 2,767 x 6
+##     year reporter_iso partner_iso product_code import_value_usd
 ##    &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                   &lt;int&gt;
-##  1  2016 chl          arg         0101                        4
-##  2  2016 chl          arg         0106                        4
-##  3  2016 chl          arg         0201                        4
-##  4  2016 chl          arg         0202                        4
-##  5  2016 chl          arg         0204                        4
-##  6  2016 chl          arg         0206                        4
-##  7  2016 chl          arg         0207                        4
-##  8  2016 chl          arg         0302                        4
-##  9  2016 chl          arg         0303                        4
-## 10  2016 chl          arg         0304                        4
-## # ... with 2,758 more rows, and 10 more variables: export_value_usd &lt;int&gt;,
-## #   import_value_usd &lt;int&gt;, export_value_usd_change_1_year &lt;int&gt;,
-## #   export_value_usd_change_5_years &lt;int&gt;,
-## #   export_value_usd_percentage_change_1_year &lt;dbl&gt;,
-## #   export_value_usd_percentage_change_5_years &lt;dbl&gt;,
-## #   import_value_usd_change_1_year &lt;int&gt;,
-## #   import_value_usd_change_5_years &lt;int&gt;,
-## #   import_value_usd_percentage_change_1_year &lt;dbl&gt;,
-## #   import_value_usd_percentage_change_5_years &lt;dbl&gt;
+##  1  2016 chl          arg         2713                   430792
+##  2  2016 chl          arg         2707                  5362832
+##  3  2016 chl          arg         2705                     1405
+##  4  2016 chl          arg         2704                  1506201
+##  5  2016 chl          arg         2703                    20518
+##  6  2016 chl          arg         2617                     4408
+##  7  2016 chl          arg         2526                   147509
+##  8  2016 chl          arg         2525                    10288
+##  9  2016 chl          arg         2522                 54386957
+## 10  2016 chl          arg         2521                    23209
+## # … with 2,757 more rows, and 1 more variable: export_value_usd &lt;int&gt;
 ```
 
 ---
@@ -248,17 +298,17 @@ Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Boli
 ## # A tibble: 97 x 2
 ##    group_name                                              export_value_usd
 ##    &lt;chr&gt;                                                              &lt;int&gt;
-##  1 Vehicles; other than railway or tramway rolling stock,~        443991155
-##  2 Nuclear reactors, boilers, machinery and mechanical ap~        325689291
-##  3 Electrical machinery and equipment and parts thereof; ~        179255930
-##  4 Plastics and articles thereof                                  171601886
-##  5 Mineral fuels, mineral oils and products of their dist~        159328756
-##  6 Iron or steel articles                                         152820725
-##  7 Miscellaneous edible preparations                              149430229
-##  8 Paper and paperboard; articles of paper pulp, of paper~        148626034
-##  9 Fruit and nuts, edible; peel of citrus fruit or melons         138431920
-## 10 Wood and articles of wood; wood charcoal                       113002115
-## # ... with 87 more rows
+##  1 Vehicles; other than railway or tramway rolling stock,…        443991154
+##  2 Nuclear reactors, boilers, machinery and mechanical ap…        325689285
+##  3 Electrical machinery and equipment and parts thereof; …        179255928
+##  4 Plastics and articles thereof                                  171601876
+##  5 Mineral fuels, mineral oils and products of their dist…        157105626
+##  6 Iron or steel articles                                         152854400
+##  7 Miscellaneous edible preparations                              149430227
+##  8 Paper and paperboard; articles of paper pulp, of paper…        148626023
+##  9 Fruit and nuts, edible; peel of citrus fruit or melons         138454388
+## 10 Wood and articles of wood; wood charcoal                       113018698
+## # … with 87 more rows
 ```
 
 ---
@@ -552,7 +602,7 @@ fji_usa &lt;- ots_create_tidy_data(
 ##  8 Unspecified                        4246687               1.09
 ##  9 Non-fillet Frozen Fish             4033516               1.04
 ## 10 Molasses                           3578212               0.92
-## # ... with 726 more rows
+## # … with 726 more rows
 ```
 
 ---
@@ -572,13 +622,26 @@ eu28 &lt;- ots_countries %&gt;%
   select(country_iso)
 
 ame_eu28 &lt;- ots_create_tidy_data(
-  years = 2017, reporters = ame$country_iso, partners = eu28$country_iso,
+  years = 2017, reporters = ame$country_iso, partners = "all",
   table = "yrp"
 )
+```
 
+---
+
+
+```r
 ame_eu28_2 &lt;- ame_eu28 %&gt;% 
-  group_by(reporter_iso) %&gt;% 
+  mutate(is_eu28 = ifelse(partner_iso %in% eu28$country_iso, 1, 0)) %&gt;% 
+  
+  group_by(reporter_iso, is_eu28) %&gt;% 
   summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %&gt;% 
+  
+  group_by(reporter_iso) %&gt;%
+  mutate(pct_to_eu28 = export_value_usd / sum(export_value_usd, na.rm = T)) %&gt;% 
+  
+  filter(is_eu28 == 1) %&gt;% 
+  select(reporter_iso, export_value_usd, pct_to_eu28) %&gt;% 
   arrange(-export_value_usd)
 ```
 
@@ -586,20 +649,21 @@ ame_eu28_2 &lt;- ame_eu28 %&gt;%
 
 
 ```
-## # A tibble: 55 x 2
-##    reporter_iso export_value_usd
-##    &lt;chr&gt;                   &lt;dbl&gt;
-##  1 usa              406477601339
-##  2 can               51171106581
-##  3 bra               45028034231
-##  4 mex               34396737203
-##  5 chl               10935603926
-##  6 arg               10870865924
-##  7 per                8373780023
-##  8 col                8121711873
-##  9 cri                3921645052
-## 10 ecu                3916982906
-## # ... with 45 more rows
+## # A tibble: 48 x 3
+## # Groups:   reporter_iso [48]
+##    reporter_iso export_value_usd pct_to_eu28
+##    &lt;chr&gt;                   &lt;dbl&gt;       &lt;dbl&gt;
+##  1 usa              406704170165      0.218 
+##  2 can               51259679792      0.109 
+##  3 bra               45042481104      0.174 
+##  4 mex               34405957170      0.0711
+##  5 chl               10937519973      0.144 
+##  6 arg               10872575385      0.165 
+##  7 per                8375757038      0.170 
+##  8 col                8124020268      0.168 
+##  9 cri                3922634462      0.246 
+## 10 ecu                3917486407      0.169 
+## # … with 38 more rows
 ```
 
 ---

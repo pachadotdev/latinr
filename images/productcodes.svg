@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="97.168831mm"
+   height="39.748989mm"
+   viewBox="0 0 97.168828 39.748989"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="productcodes.svg">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker3081"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3079"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6)" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1498"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart">
+      <path
+         transform="scale(0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1496"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1083"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1080"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4714"
+       inkscape:persp3d-origin="272.3118 : 84.672267 : 1"
+       inkscape:vp_z="544.62361 : 127.0084 : 1"
+       inkscape:vp_y="0 : 999.99975 : 0"
+       inkscape:vp_x="0 : 127.0084 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 127.0084 : 1"
+       inkscape:vp_y="0 : 999.99975 : 0"
+       inkscape:vp_z="544.62361 : 127.0084 : 1"
+       inkscape:persp3d-origin="272.3118 : 84.672267 : 1"
+       id="perspective4714-3" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 127.0084 : 1"
+       inkscape:vp_y="0 : 999.99976 : 0"
+       inkscape:vp_z="544.62363 : 127.0084 : 1"
+       inkscape:persp3d-origin="272.31181 : 84.672268 : 1"
+       id="perspective4714-7" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="259.64251"
+     inkscape:cy="106.67573"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g966"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="832"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     fit-margin-top="5"
+     fit-margin-left="5"
+     fit-margin-bottom="5"
+     fit-margin-right="5"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:lockguides="true">
+    <sodipodi:guide
+       position="6.0476187,15.875"
+       orientation="0,1"
+       id="guide198"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(65.721216,-165.01493)">
+    <g
+       id="g3967"
+       transform="matrix(0.28222222,0,0,0.28222222,-32.645493,127.94206)">
+      <g
+         transform="translate(-316.88028,-243.57915)"
+         id="layer1-2"
+         inkscape:label="Layer 1" />
+      <g
+         transform="translate(-259.13017,-124.82991)"
+         id="g4643">
+        <g
+           transform="rotate(45,345.35979,192.23726)"
+           id="g5111">
+          <g
+             id="g5079"
+             transform="rotate(-45,133.71331,77.409898)">
+            <g
+               id="g4877">
+              <g
+                 id="g4951" />
+            </g>
+          </g>
+          <g
+             id="g4317">
+            <g
+               transform="rotate(-45,345.35978,204.21215)"
+               id="g3425">
+              <g
+                 id="g966"
+                 transform="rotate(44.989649,249.65847,316.77013)">
+                <text
+                   id="text990"
+                   y="466.29291"
+                   x="-117.89458"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   xml:space="preserve"
+                   transform="rotate(-45)"><tspan
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'"
+                     y="466.29291"
+                     x="-117.89458"
+                     id="tspan988"
+                     sodipodi:role="line">1962</tspan></text>
+                <rect
+                   style="fill:#8d91d0;fill-opacity:1;stroke:none;stroke-width:1.32131338;stroke-miterlimit:4;stroke-dasharray:none"
+                   id="rect1077"
+                   width="263.79178"
+                   height="14.684625"
+                   x="-103.88665"
+                   y="434.60147"
+                   transform="rotate(-44.989649)" />
+                <path
+                   style="fill:none;stroke:#000000;stroke-width:0.93897641;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1498);marker-end:url(#marker3081)"
+                   d="M 227.46001,407.89389 443.89271,191.53937"
+                   id="path200"
+                   inkscape:connector-curvature="0" />
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="142.5965"
+                   y="466.33997"
+                   id="text1075"><tspan
+                     sodipodi:role="line"
+                     id="tspan1073"
+                     x="142.5965"
+                     y="466.33997"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">2018</tspan></text>
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="1.9751147"
+                   y="446.25253"
+                   id="text1081"><tspan
+                     sodipodi:role="line"
+                     id="tspan1079"
+                     x="1.9751147"
+                     y="446.25253"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">SITC rev 1</tspan></text>
+                <rect
+                   transform="rotate(-44.989649)"
+                   y="419.91684"
+                   x="-37.981133"
+                   height="14.684625"
+                   width="197.88625"
+                   id="rect1095"
+                   style="fill:#8aa678;fill-opacity:1;stroke:none;stroke-width:1.14441359;stroke-miterlimit:4;stroke-dasharray:none" />
+                <text
+                   id="text1087"
+                   y="431.57373"
+                   x="34.168018"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   xml:space="preserve"
+                   transform="rotate(-45)"><tspan
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'"
+                     y="431.57373"
+                     x="34.168018"
+                     id="tspan1085"
+                     sodipodi:role="line">SITC rev 2</tspan></text>
+                <rect
+                   style="fill:#9dde67;fill-opacity:1;stroke:none;stroke-width:0.90032393;stroke-miterlimit:4;stroke-dasharray:none"
+                   id="rect1097"
+                   width="122.47491"
+                   height="14.684625"
+                   x="37.430218"
+                   y="405.23221"
+                   transform="rotate(-44.989649)" />
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="-49.925827"
+                   y="466.30518"
+                   id="text1101"><tspan
+                     sodipodi:role="line"
+                     id="tspan1099"
+                     x="-49.925827"
+                     y="466.30518"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">1976</tspan></text>
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="71.87635"
+                   y="416.8959"
+                   id="text1105"><tspan
+                     sodipodi:role="line"
+                     id="tspan1103"
+                     x="71.87635"
+                     y="416.8959"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">HS rev 1992</tspan></text>
+                <rect
+                   transform="rotate(-44.989649)"
+                   y="361.17831"
+                   x="108.08881"
+                   height="14.684625"
+                   width="51.816311"
+                   id="rect1107"
+                   style="fill:#df8f87;fill-opacity:1;stroke:none;stroke-width:0.58560997;stroke-miterlimit:4;stroke-dasharray:none" />
+                <text
+                   id="text1111"
+                   y="372.85034"
+                   x="118.03477"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   xml:space="preserve"
+                   transform="rotate(-45)"><tspan
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'"
+                     y="372.85034"
+                     x="118.03477"
+                     id="tspan1109"
+                     sodipodi:role="line">HS 07</tspan></text>
+                <text
+                   id="text1115"
+                   y="466.31879"
+                   x="25.408995"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   xml:space="preserve"
+                   transform="rotate(-45)"><tspan
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'"
+                     y="466.31879"
+                     x="25.408995"
+                     id="tspan1113"
+                     sodipodi:role="line">1992</tspan></text>
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="95.386673"
+                   y="466.33142"
+                   id="text1119"><tspan
+                     sodipodi:role="line"
+                     id="tspan1117"
+                     x="95.386673"
+                     y="466.33142"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">2007</tspan></text>
+                <rect
+                   style="fill:#828282;fill-opacity:1;stroke:none;stroke-width:0.706258;stroke-miterlimit:4;stroke-dasharray:none"
+                   id="rect52"
+                   width="75.366142"
+                   height="14.684625"
+                   x="84.538979"
+                   y="375.86295"
+                   transform="rotate(-44.989649)" />
+                <text
+                   transform="rotate(-45)"
+                   xml:space="preserve"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   x="106.2572"
+                   y="387.53284"
+                   id="text56"><tspan
+                     sodipodi:role="line"
+                     id="tspan54"
+                     x="106.2572"
+                     y="387.53284"
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'">HS 02</tspan></text>
+                <rect
+                   transform="rotate(-44.989649)"
+                   y="390.54758"
+                   x="56.26339"
+                   height="14.684625"
+                   width="103.64173"
+                   id="rect58"
+                   style="fill:#eae385;fill-opacity:1;stroke:none;stroke-width:0.82821399;stroke-miterlimit:4;stroke-dasharray:none" />
+                <text
+                   id="text62"
+                   y="402.21188"
+                   x="75.363235"
+                   style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+                   xml:space="preserve"
+                   transform="rotate(-45)"><tspan
+                     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.5px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans'"
+                     y="402.21188"
+                     x="75.363235"
+                     id="tspan60"
+                     sodipodi:role="line">HS rev 1996</tspan></text>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

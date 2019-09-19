@@ -101,6 +101,64 @@ Hardware and software stack
 
 ---
 
+## Introduction
+
+The next three slides are an *oversimplification* just to explain the work in
+wide terms.
+
+---
+
+## Introduction
+
+The raw data contains missing flows and the data is not tidy data:
+
+<img src="images/flows1.svg" alt="stack" width="100%"/>
+
+---
+
+## Introduction
+
+We can patch this applying some articles:
+
+<img src="images/flows2.svg" alt="stack" width="100%"/>
+
+---
+
+## Introduction
+
+Customs have changed their coding systems in order to reflect changes
+in exported products (i.e. in 1960 nobody exported laptops).
+
+<img src="images/productcodes.svg" alt="stack" width="100%"/>
+
+---
+
+## Introduction
+
+* We have 2018 data, similar initiatives have datasets updated to 2016 or 2017.
+* But *much* more important than that, we converted all years to HS rev 2007 to
+allow time comparisons.
+
+---
+
+## Introduction
+
+The HS consists in nested codes. This is important as it allow to
+convert between classifications:
+
+<img src="images/productcodes2.svg" alt="stack" width="100%"/>
+
+---
+
+## Introduction
+
+Product code conversion is far from a 1-to-1 map. The solution is an
+intrincate `group_by() + left_join()`:
+
+<img src="images/productcodes3.svg" alt="stack" width="100%"/>
+
+---
+
 # API
 
 ---
@@ -465,19 +523,31 @@ eu28 <- ots_countries %>%
   select(country_iso)
 
 ame_eu28 <- ots_create_tidy_data(
-  years = 2017, reporters = ame$country_iso, partners = eu28$country_iso,
+  years = 2017, reporters = ame$country_iso, partners = "all",
   table = "yrp"
 )
+```
 
+---
+
+```{r ts_4, echo = TRUE}
 ame_eu28_2 <- ame_eu28 %>% 
-  group_by(reporter_iso) %>% 
+  mutate(is_eu28 = ifelse(partner_iso %in% eu28$country_iso, 1, 0)) %>% 
+  
+  group_by(reporter_iso, is_eu28) %>% 
   summarise(export_value_usd = sum(export_value_usd, na.rm = T)) %>% 
+  
+  group_by(reporter_iso) %>%
+  mutate(pct_to_eu28 = export_value_usd / sum(export_value_usd, na.rm = T)) %>% 
+  
+  filter(is_eu28 == 1) %>% 
+  select(reporter_iso, export_value_usd, pct_to_eu28) %>% 
   arrange(-export_value_usd)
 ```
 
 ---
 
-```{r ts_4}
+```{r ts_5}
 ame_eu28_2
 ```
 
