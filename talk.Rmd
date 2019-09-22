@@ -573,6 +573,15 @@ shiny.tradestatistics.io
 
 ---
 
+## Related packages
+
+* Gravity (CRAN): Complex econometric models for international trade
+* Economiccomplexity (CRAN): Recursive methods for international trade
+
+<img src="images/packages.svg" alt="atlas2" height="100%"/>
+
+---
+
 ## Acknowledgements
 
 * rOpenSci <3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
@@ -581,4 +590,4 @@ shiny.tradestatistics.io
 
 ---
 
-# Thanks for your attention!
+# Thanks for your attention! Please follow @ropensci
