@@ -613,16 +613,12 @@ Which country from America is the #1 partner with the European Union (EU-28)?
 
 
 ```r
-ame &lt;- ots_countries %&gt;% 
-  filter(continent == "Americas") %&gt;% 
-  select(country_iso)
-
 eu28 &lt;- ots_countries %&gt;% 
   filter(eu28_member == 1) %&gt;% 
   select(country_iso)
 
 ame_eu28 &lt;- ots_create_tidy_data(
-  years = 2017, reporters = ame$country_iso, partners = "all",
+  years = 2017, reporters = "c-am", partners = "all",
   table = "yrp"
 )
 ```

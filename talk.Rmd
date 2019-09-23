@@ -514,16 +514,12 @@ fji_usa %>%
 Which country from America is the #1 partner with the European Union (EU-28)?
 
 ```{r ts_3, echo=TRUE}
-ame <- ots_countries %>% 
-  filter(continent == "Americas") %>% 
-  select(country_iso)
-
 eu28 <- ots_countries %>% 
   filter(eu28_member == 1) %>% 
   select(country_iso)
 
 ame_eu28 <- ots_create_tidy_data(
-  years = 2017, reporters = ame$country_iso, partners = "all",
+  years = 2017, reporters = "c-am", partners = "all",
   table = "yrp"
 )
 ```
