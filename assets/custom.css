@@ -3,10 +3,12 @@
 
 body { font-family: "Fira Sans", sans-serif; }
 
+/*
 .remark-slide {
   background-image: url("../bkg/container-ship.jpg");
   background-size: auto;
 }
+*/
 
 .bg-main6 { background-color: white; color: black}
 .bg-main6 .remark-code, .remark-inline-code { font-family: "Fira Code", monospace; color: #333333; font-variant-ligatures: inherit; }
@@ -53,7 +55,11 @@ h1, h2, h3, h4, h5, h6 {
 	border-left-color: white;
 	border-left-style: solid;
 	border-left-width: 0.5em;
-	background-color: rgb(51,51,51,0.3);
+	background-color: #707070;
+	background-image: url("../images/logo.png"), url("../images/logo2.png"), url("../images/ropensci.svg");
+  background-size:  17%, 17%, cover;
+  background-position: 80% 3%, 91% 32%, 80% 64%;
+  background-repeat: no-repeat;
 }
 
 .remark-code, .remark-inline-code {
