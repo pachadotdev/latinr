@@ -9,7 +9,7 @@ output:
     css: ["assets/kunoichi.css", "assets/ninjutsu.css", "assets/custom.css"]
     lib_dir: libs
     nature:
-      ratio: "16:9"
+      ratio: "4:3"
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
@@ -23,9 +23,13 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FAL
 ## Contents of the talk
 
 * Introduction
+
 * API
+
 * R Package
+
 * Dashboard
+
 * Code and documentation
 
 ---
@@ -34,9 +38,7 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FAL
 
 **Twitter and Github: `pachamaltese`**
 
-**Email: `m vargas at dcc dot uchile dot cl`**
-
-**Phone: `+1 XXX XXX XX XX or +56 X X XXX XX XX`**
+**Email: `pacha at dcc dot uchile dot cl`**
 
 ---
 
@@ -80,7 +82,7 @@ knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FAL
 
 After many emails I got a temporary access to download the raw data.
 
-<img src="images/comtrade.png" alt="comtrade" height="100%"/>
+<img src="images/comtrade.png" alt="comtrade" width="100%"/>
 
 ---
 
@@ -118,7 +120,7 @@ The raw data contains missing flows and the data is not tidy data:
 
 ## Introduction
 
-We can patch this applying some articles:
+We can patch this by applying some articles:
 
 <img src="images/flows2.svg" alt="stack" width="100%"/>
 
@@ -136,26 +138,9 @@ in exported products (i.e. in 1960 nobody exported laptops).
 ## Introduction
 
 * We have 2018 data, similar initiatives have datasets updated to 2016 or 2017.
+
 * But *much* more important than that, we converted all years to HS rev 2007 to
 allow time comparisons.
-
----
-
-## Introduction
-
-The HS consists in nested codes. This is important as it allow to
-convert between classifications:
-
-<img src="images/productcodes2.svg" alt="stack" width="100%"/>
-
----
-
-## Introduction
-
-Product code conversion is far from a 1-to-1 map. The solution is an
-intrincate `group_by() + left_join()`:
-
-<img src="images/productcodes3.svg" alt="stack" width="100%"/>
 
 ---
 
@@ -434,6 +419,7 @@ atlas_id_to_iso <- fromJSON("http://atlas.cid.harvard.edu/api/metadata/location/
 atlas_id_to_iso <- atlas_id_to_iso$data %>% select(id, code)
 
 atlas_data_2 <- atlas_data %>% 
+  filter(year == 2016) %>%
   left_join(atlas_id_to_hs, by = c("product_id" = "id")) %>% 
   left_join(atlas_id_to_iso, by = c("partner_id" = "id"))
 ```
@@ -446,7 +432,6 @@ atlas_data_2 <- atlas_data %>%
 
 ```{r aec_api_4}
 atlas_data_2 %>%
-  filter(year == 2016) %>% 
   select(code.y, code.x, export_value) %>% 
   as_tibble()
 ```
@@ -493,6 +478,12 @@ fji_usa <- ots_create_tidy_data(
   years = 2017, reporters = "fji", partners = "usa",
   include_shortnames = T
 )
+
+fji_usa_2 <- fji_usa %>% 
+  select(product_shortname_english, export_value_usd) %>% 
+  arrange(-export_value_usd) %>% 
+  mutate(export_value_share = round(100 * export_value_usd /
+                                      sum(export_value_usd, na.rm = T), 2))
 ```
 
 ---
@@ -500,11 +491,7 @@ fji_usa <- ots_create_tidy_data(
 ## R package
 
 ```{r ts_2}
-fji_usa %>% 
-  select(product_shortname_english, export_value_usd) %>% 
-  arrange(-export_value_usd) %>% 
-  mutate(export_value_share = round(100 * export_value_usd /
-                                      sum(export_value_usd, na.rm = T), 2))
+fji_usa_2
 ```
 
 ---

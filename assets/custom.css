@@ -4,10 +4,8 @@
 body { font-family: "Fira Sans", sans-serif; }
 
 .remark-slide {
-  background-image: url("../bkg/nasa-bkg.png");
-  background-size:  contain;
-  background-position: left top;
-  background-repeat: no-repeat;
+  background-image: url("../bkg/container-ship.jpg");
+  background-size: auto;
 }
 
 .bg-main6 { background-color: white; color: black}

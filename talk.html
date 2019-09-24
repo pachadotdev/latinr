@@ -4,9 +4,9 @@
     <title>Open Trade Statistics</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pachá" />
-    <link rel="stylesheet" href="assets/kunoichi.css" type="text/css" />
-    <link rel="stylesheet" href="assets/ninjutsu.css" type="text/css" />
-    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets\kunoichi.css" type="text/css" />
+    <link rel="stylesheet" href="assets\ninjutsu.css" type="text/css" />
+    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -27,9 +27,13 @@ class: center, middle, inverse, title-slide
 ## Contents of the talk
 
 * Introduction
+
 * API
+
 * R Package
+
 * Dashboard
+
 * Code and documentation
 
 ---
@@ -38,9 +42,7 @@ class: center, middle, inverse, title-slide
 
 **Twitter and Github: `pachamaltese`**
 
-**Email: `m vargas at dcc dot uchile dot cl`**
-
-**Phone: `+1 XXX XXX XX XX or +56 X X XXX XX XX`**
+**Email: `pacha at dcc dot uchile dot cl`**
 
 ---
 
@@ -84,7 +86,7 @@ class: center, middle, inverse, title-slide
 
 After many emails I got a temporary access to download the raw data.
 
-&lt;img src="images/comtrade.png" alt="comtrade" height="100%"/&gt;
+&lt;img src="images/comtrade.png" alt="comtrade" width="100%"/&gt;
 
 ---
 
@@ -122,7 +124,7 @@ The raw data contains missing flows and the data is not tidy data:
 
 ## Introduction
 
-We can patch this applying some articles:
+We can patch this by applying some articles:
 
 &lt;img src="images/flows2.svg" alt="stack" width="100%"/&gt;
 
@@ -140,26 +142,9 @@ in exported products (i.e. in 1960 nobody exported laptops).
 ## Introduction
 
 * We have 2018 data, similar initiatives have datasets updated to 2016 or 2017.
+
 * But *much* more important than that, we converted all years to HS rev 2007 to
 allow time comparisons.
-
----
-
-## Introduction
-
-The HS consists in nested codes. This is important as it allow to
-convert between classifications:
-
-&lt;img src="images/productcodes2.svg" alt="stack" width="100%"/&gt;
-
----
-
-## Introduction
-
-Product code conversion is far from a 1-to-1 map. The solution is an
-intrincate `group_by() + left_join()`:
-
-&lt;img src="images/productcodes3.svg" alt="stack" width="100%"/&gt;
 
 ---
 
@@ -510,6 +495,7 @@ atlas_id_to_iso &lt;- fromJSON("http://atlas.cid.harvard.edu/api/metadata/locati
 atlas_id_to_iso &lt;- atlas_id_to_iso$data %&gt;% select(id, code)
 
 atlas_data_2 &lt;- atlas_data %&gt;% 
+  filter(year == 2016) %&gt;%
   left_join(atlas_id_to_hs, by = c("product_id" = "id")) %&gt;% 
   left_join(atlas_id_to_iso, by = c("partner_id" = "id"))
 ```
@@ -581,6 +567,12 @@ fji_usa &lt;- ots_create_tidy_data(
   years = 2017, reporters = "fji", partners = "usa",
   include_shortnames = T
 )
+
+fji_usa_2 &lt;- fji_usa %&gt;% 
+  select(product_shortname_english, export_value_usd) %&gt;% 
+  arrange(-export_value_usd) %&gt;% 
+  mutate(export_value_share = round(100 * export_value_usd /
+                                      sum(export_value_usd, na.rm = T), 2))
 ```
 
 ---
@@ -602,7 +594,7 @@ fji_usa &lt;- ots_create_tidy_data(
 ##  8 Unspecified                        4246687               1.09
 ##  9 Non-fillet Frozen Fish             4033516               1.04
 ## 10 Molasses                           3578212               0.92
-## # … with 726 more rows
+## # ... with 726 more rows
 ```
 
 ---
@@ -706,7 +698,7 @@ shiny.tradestatistics.io
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "16:9",
+"ratio": "4:3",
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false
