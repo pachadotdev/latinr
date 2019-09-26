@@ -4,9 +4,9 @@
     <title>APIs con R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Pachá" />
-    <link rel="stylesheet" href="assets\kunoichi.css" type="text/css" />
-    <link rel="stylesheet" href="assets\ninjutsu.css" type="text/css" />
-    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets/kunoichi.css" type="text/css" />
+    <link rel="stylesheet" href="assets/ninjutsu.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -36,6 +36,49 @@ class: center, middle, inverse, title-slide
 * Genera una API REST
 * Similar a escribir paquetes de R
 * Usa los conceptos de get, post y put
+
+---
+
+# ¿Por qué usar Plumber?
+
+## Hardware
+
+* En la administración pública muchas veces el hardware no nos sirve para ajustar modelos
+* Un notebook, por caro que sea, a veces tampoco es suficiente
+
+---
+
+# ¿Por qué usar Plumber?
+
+## Técnica
+
+* Las redes neuronales se pueden ejecutar por partes
+* Las regresiones necesitan capacidad computacional para la matriz de diseño que *no* se lee por partes
+* A veces ayuda usar matrices dispersas en lugar de matrices densas
+* No es un problema de R, Python, Stata, etc, tiene que ver con como el computador almacena números
+
+---
+
+# ¿Por qué usar Plumber?
+
+## Interpretabilidad
+
+* Las herramientas de regresión entregan una salida *interpretable*
+* Para el diseño de políticas públicas no podemos confiar en cajas negras
+* La única salvedad serían los modelos de series de tiempo
+* Cualquier otro modelo que combina variables debe ser explicable
+
+---
+
+# ¿Por qué usar Plumber?
+
+## Evaluación
+
+* Las políticas públicas tienen *impacto*
+* Ese impacto se puede medir usando econometría
+* Mirada económica/ética: 
+  * ¿Existe un programa mejor que pueda implementar?
+  * ¿Puedo mejorar a un grupo sin empeorar a los demás?
 
 ---
 
