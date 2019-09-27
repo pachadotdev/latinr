@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Open Trade Statistics</title>
+    <title>index.utf8.md</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Pachá" />
-    <link rel="stylesheet" href="assets\kunoichi.css" type="text/css" />
-    <link rel="stylesheet" href="assets\ninjutsu.css" type="text/css" />
-    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/metropolis.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/metropolis-fonts.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/fontawesome-all.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/part-slide.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/my-theme.min.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+
+
+
+
 class: center, middle, inverse, title-slide
 
 # Open Trade Statistics
-### Pachá
-### LatinR - Sep 27th, 2019
+## Pachá, rOpenSci &lt;br/&gt; <i class="fab  fa-twitter "></i> pachamaltese, <i class="fab  fa-github "></i> pachamaltese
+### 2019-09-27
 
 ---
 
-
-
-
-
-## Contents of the talk
+# Contents of the talk
 
 * Introduction
 
@@ -30,105 +32,76 @@ class: center, middle, inverse, title-slide
 
 * R Package
 
-* Dashboard
+* Shiny Dashboard
 
 * Code and documentation
 
 ---
 
-## Where to reach me
+# Where to reach me
 
 **Twitter and Github: `pachamaltese`**
 
-**Email: `pacha@dcc.uchile.cl`**
+**Email: `pacha # dcc * uchile * cl`**
 
 ---
 
 # Introduction
 
----
-
-## Introduction
-
 * [Open Trade Statistics](https://tradestatistics.io) (OTS) was created with the intention to lower the barrier to working with international economic trade data.
 
 * It includes a public API, a dashboard, and an R package for data retrieval.
 
-* The project started when I was affected by the fact that many Latin American Universities have limited or no access to the [United Nations Commodity Trade Statistics Database](https://comtrade.un.org/) (UN COMTRADE).
+---
+
+# Introduction
+
+* Many Latin American Universities have limited or no access to the [United Nations Commodity Trade Statistics Database](https://comtrade.un.org/) (UN COMTRADE).
+
+* This project shares curated datasets based on UN COMTRADE.
 
 ---
 
-## Introduction
+# Introduction
 
-* There are alternatives to COMTRADE.
-
-* Example: The [Base Pour L'Analyse du Commerce International](http://www.cepii.fr/CEPII/en/bdd_modele/presentation.asp?id=1) (BACI).
-
-* BACI remarkables: It is constructed using the raw data and a method that reconciles the declarations of the exporter and the importer.
-
-* You need UN COMTRADE institutional paid access to access BACI.
-
----
-
-## Introduction
-
-* I contacted UN COMTRADE.
-
-* My proposal was to do something similar to BACI but available for anyone.
-
-* COMTRADE agreed as long as it kept commercial purposes out of the scope of the project.
-
----
-
-## Introduction
-
-After many emails I got a temporary access to download the raw data.
-
-&lt;img src="images/comtrade.png" alt="comtrade" width="100%"/&gt;
-
----
-
-## Introduction
-
-The project has a major reproducibility flaw: You can reproduce the steps to
-obtain the curated data if you already have the raw data.
+The project has a major reproducibility flaw.
 
 &lt;img src="images/cat.png" alt="cat" width="100%"/&gt;
 
 ---
 
-## Introduction
+# Introduction
 
 Hardware and software stack
 
-&lt;img src="images/stack.svg" alt="stack" width="100%"/&gt;
+&lt;img src="images/stack.svg" alt="stack" height="100%" width="100%"/&gt;
 
 ---
 
-## Introduction
+# Introduction
 
 The next three slides are an *oversimplification* just to explain the work in
 wide terms.
 
 ---
 
-## Introduction
+# Introduction
 
-The raw data contains missing flows and the data is not tidy data:
+The raw data contains missing flows:
 
 &lt;img src="images/flows1.svg" alt="stack" width="100%"/&gt;
 
 ---
 
-## Introduction
+# Introduction
 
-We can patch this by applying some articles:
+Possible solution (Anderson &amp; van Wincoop, 2004 propose 8% rate):
 
 &lt;img src="images/flows2.svg" alt="stack" width="100%"/&gt;
 
 ---
 
-## Introduction
+# Introduction
 
 Customs have changed their coding systems in order to reflect changes
 in exported products (i.e. in 1960 nobody exported laptops).
@@ -137,7 +110,7 @@ in exported products (i.e. in 1960 nobody exported laptops).
 
 ---
 
-## Introduction
+# Introduction
 
 * We have 2018 data, similar initiatives have datasets updated to 2016 or 2017.
 
@@ -146,26 +119,16 @@ allow time comparisons.
 
 ---
 
-# API
-
----
-
-## Comparison between APIs
+# Comparison between APIs
 
 Similar projects:
 
-* [The Atlas of Economic complexity](http://atlas.cid.harvard.edu/)
-* [The Obervatory of Economic complexity](http://atlas.media.mit.edu/)
-
-Both use UN COMTRADE data and focus on data visualization to answer questions like:
-
-* Who imported Electronics in 1980?
-* Who exported Refined Copper in 1990?
-* Where did Chile export Wine to in 2016?
+* [The Atlas of Economic complexity (Harvard)](http://atlas.cid.harvard.edu/)
+* [The Obervatory of Economic complexity (it was from MIT)](http://atlas.media.mit.edu/)
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
 As a simple example, I shall compare three APIs by extracting what did Chile export to Argentina, Bolivia and Perú in 2016.
 
@@ -180,19 +143,17 @@ library(purrr)
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### Open Trade Statistics
+## Open Trade Statistics
 
 * docs.tradestatistics.io has fully detailed explanations to use the API
 
-* In case of not knowing the ISO codes for the country of origin or destination, I can check api.tradestatistics.io/countries and inspect it from the browser.
-
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### Open Trade Statistics
+## Open Trade Statistics
 
 
 ```r
@@ -211,10 +172,15 @@ ots_data &lt;- map_df(partners, read_from_ots)
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### Open Trade Statistics
+## Open Trade Statistics
 
+
+```r
+# Preview the data
+as_tibble(ots_data)
+```
 
 ```
 ## # A tibble: 2,767 x 6
@@ -230,28 +196,14 @@ ots_data &lt;- map_df(partners, read_from_ots)
 ##  8  2016 chl          arg         2525                    10288
 ##  9  2016 chl          arg         2522                 54386957
 ## 10  2016 chl          arg         2521                    23209
-## # ... with 2,757 more rows, and 1 more variable: export_value_usd &lt;int&gt;
+## # … with 2,757 more rows, and 1 more variable: export_value_usd &lt;int&gt;
 ```
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### Open Trade Statistics
-
-* I got tidy data but I still cannot answer the original question.
-
-* I can use the API again to join two tables.
-
-* I'll obtain the product information and then I'll group the data by groups of products.
-
-* The answer has to be *informative*
-
----
-
-## Comparison between APIs
-
-### Open Trade Statistics
+## Open Trade Statistics
 
 
 ```r
@@ -270,35 +222,37 @@ ots_data_2 &lt;- ots_data %&gt;%
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### Open Trade Statistics
+## Open Trade Statistics
 
-Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Bolivia and Perú.
 
+```r
+ots_data_2
+```
 
 ```
 ## # A tibble: 97 x 2
 ##    group_name                                              export_value_usd
 ##    &lt;chr&gt;                                                              &lt;int&gt;
-##  1 Vehicles; other than railway or tramway rolling stock,~        443991154
-##  2 Nuclear reactors, boilers, machinery and mechanical ap~        325689285
-##  3 Electrical machinery and equipment and parts thereof; ~        179255928
+##  1 Vehicles; other than railway or tramway rolling stock,…        443991154
+##  2 Nuclear reactors, boilers, machinery and mechanical ap…        325689285
+##  3 Electrical machinery and equipment and parts thereof; …        179255928
 ##  4 Plastics and articles thereof                                  171601876
-##  5 Mineral fuels, mineral oils and products of their dist~        157105626
+##  5 Mineral fuels, mineral oils and products of their dist…        157105626
 ##  6 Iron or steel articles                                         152854400
 ##  7 Miscellaneous edible preparations                              149430227
-##  8 Paper and paperboard; articles of paper pulp, of paper~        148626023
+##  8 Paper and paperboard; articles of paper pulp, of paper…        148626023
 ##  9 Fruit and nuts, edible; peel of citrus fruit or melons         138454388
 ## 10 Wood and articles of wood; wood charcoal                       113018698
-## # ... with 87 more rows
+## # … with 87 more rows
 ```
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Observatory of Economic Complexity
+## The Observatory of Economic Complexity
 
 * This API is documented at atlas.media.mit.edu/api.
 
@@ -306,9 +260,9 @@ Now I can say that in 2016, Chile exported primarily vehicles to Argentina, Boli
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Observatory of Economic Complexity
+## The Observatory of Economic Complexity
 
 
 ```r
@@ -329,10 +283,16 @@ oec_data &lt;- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$d
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Observatory of Economic Complexity
+## The Observatory of Economic Complexity
 
+
+```r
+oec_data %&gt;% 
+  select(dest_id, hs07_id, hs07_id_len, export_val) %&gt;% 
+  as_tibble()
+```
 
 ```
 ## # A tibble: 9,933 x 4
@@ -348,20 +308,14 @@ oec_data &lt;- bind_rows(oec_data[[1]]$data, oec_data[[2]]$data, oec_data[[3]]$d
 ##  8 saarg   010202             6        NA 
 ##  9 saarg   01020230           8        NA 
 ## 10 saarg   010204             6        NA 
-## # ... with 9,923 more rows
+## # … with 9,923 more rows
 ```
-
-Problems:
-
-* Post-filtering is required at `hs07_id` as there are mixed length HS codes
-* There are no 8 digits HS codes!
-* Here 6 digits means 4 digits and 8 means 6
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Observatory of Economic Complexity
+## The Observatory of Economic Complexity
 
 Let's filter with this consideration in mind:
 
@@ -377,10 +331,14 @@ oec_data_2 &lt;- oec_data %&gt;%
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Observatory of Economic Complexity
+## The Observatory of Economic Complexity
 
+
+```r
+oec_data_2
+```
 
 ```
 ## # A tibble: 2,565 x 3
@@ -396,14 +354,14 @@ oec_data_2 &lt;- oec_data %&gt;%
 ##  8 saarg   0302     36718891.
 ##  9 saarg   0303       211295.
 ## 10 saarg   0304     15793369.
-## # ... with 2,555 more rows
+## # … with 2,555 more rows
 ```
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
 * I couldn't find documentation for this API
 
@@ -411,25 +369,25 @@ oec_data_2 &lt;- oec_data %&gt;%
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
 &lt;img src="images/atlas.png" alt="atlas" width="100%"/&gt;
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
 &lt;img src="images/atlas2.png" alt="atlas2" width="100%"/&gt;
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
 
 ```r
@@ -450,10 +408,16 @@ atlas_data &lt;- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_dat
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
+
+```r
+atlas_data %&gt;% 
+  select(year, partner_id, product_id, export_value) %&gt;% 
+  as_tibble()
+```
 
 ```
 ## # A tibble: 62,959 x 4
@@ -469,20 +433,14 @@ atlas_data &lt;- bind_rows(atlas_data[[1]]$data, atlas_data[[2]]$data, atlas_dat
 ##  8  2002          8        650       191069
 ##  9  2003          8        650        89214
 ## 10  2004          8        650       242463
-## # ... with 62,949 more rows
+## # … with 62,949 more rows
 ```
-
-Problems:
-
-* Post-filtering is required at year as there are more years than what was requested.
-* `product_id` is of class `integer`. How about official HS codes such as `0101`? 
-* Some scraping indicates that the `product_id` is linked to HS codes.
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
 
 ```r
@@ -500,10 +458,16 @@ atlas_data_2 &lt;- atlas_data %&gt;%
 
 ---
 
-## Comparison between APIs
+# Comparison between APIs
 
-### The Atlas of Economic Complexity
+## The Atlas of Economic Complexity
 
+
+```r
+atlas_data_2 %&gt;%
+  select(code.y, code.x, export_value) %&gt;% 
+  as_tibble()
+```
 
 ```
 ## # A tibble: 2,705 x 3
@@ -519,40 +483,20 @@ atlas_data_2 &lt;- atlas_data %&gt;%
 ##  8 ARG    0302       34514964
 ##  9 ARG    0303         214817
 ## 10 ARG    0304       14997462
-## # ... with 2,695 more rows
+## # … with 2,695 more rows
 ```
 
 ---
 
 # R package
 
----
-
-## R package
-
-Let's go easy
-
 ```r
 # easy start
 install.packages("tradestatistics")
 ```
-
 ---
 
-## R package
-
-With more time we should have done (but it requires `devtools` and more, and I don't want
-you to spend the rest of the presentation installing packages)
-
-```r
-# reproducible start
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tradestatistics)
-```
-
----
-
-## R package
+# R package
 
 Fiji exports a lot of water. But how much of its exports to the US are actually water?
 
@@ -575,8 +519,12 @@ fji_usa_2 &lt;- fji_usa %&gt;%
 
 ---
 
-## R package
+# R package
 
+
+```r
+fji_usa_2
+```
 
 ```
 ## # A tibble: 736 x 3
@@ -592,12 +540,12 @@ fji_usa_2 &lt;- fji_usa %&gt;%
 ##  8 Unspecified                        4246687               1.09
 ##  9 Non-fillet Frozen Fish             4033516               1.04
 ## 10 Molasses                           3578212               0.92
-## # ... with 726 more rows
+## # … with 726 more rows
 ```
 
 ---
 
-## R package
+# R package
 
 Which country from America is the #1 partner with the European Union (EU-28)?
 
@@ -634,6 +582,10 @@ ame_eu28_2 &lt;- ame_eu28 %&gt;%
 ---
 
 
+```r
+ame_eu28_2
+```
+
 ```
 ## # A tibble: 48 x 3
 ## # Groups:   reporter_iso [48]
@@ -649,22 +601,18 @@ ame_eu28_2 &lt;- ame_eu28 %&gt;%
 ##  8 col                8124020268      0.168 
 ##  9 cri                3922634462      0.246 
 ## 10 ecu                3917486407      0.169 
-## # ... with 38 more rows
+## # … with 38 more rows
 ```
 
 ---
 
 # Dashboard
 
----
-
-## Dashboard
-
 shiny.tradestatistics.io
 
 ---
 
-## Code and documentation
+# Code and documentation
 
 **github.com/tradestatistics**
 
@@ -674,7 +622,7 @@ shiny.tradestatistics.io
 
 ---
 
-## Related packages
+# Related packages
 
 * Gravity (CRAN): Complex econometric models for international trade
 * Economiccomplexity (CRAN): Recursive methods for international trade
@@ -683,7 +631,7 @@ shiny.tradestatistics.io
 
 ---
 
-## Acknowledgements
+# Acknowledgements
 
 * rOpenSci &lt;3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
 * DigitalOcean: Danny
@@ -691,7 +639,9 @@ shiny.tradestatistics.io
 
 ---
 
-# Thanks for your attention! Please follow @ropensci
+# Thanks for your attention!
+
+Please follow @ropensci
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
