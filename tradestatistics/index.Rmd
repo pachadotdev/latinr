@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE, cache = TRUE,
 class: center, middle, inverse, title-slide
 
 # Open Trade Statistics
-## Pachá, rOpenSci <br/> `r icon::fa('twitter')` pachamaltese, `r icon::fa('github')` pachamaltese
+## Pachá<br/> `r icon::fa('twitter')` pachamaltese, `r icon::fa('github')` pachamaltese
 ### 2019-09-27
 
 ---
