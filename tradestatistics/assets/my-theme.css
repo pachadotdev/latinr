@@ -35,10 +35,6 @@
 .title-slide {
   background-color: #4C8ADD;
   border-top: 80px solid #4C8ADD;
-  background-image: url(../assets/android-chrome-512x512.png);
-  background-size: 30%;
-  background-repeat: no-repeat;
-  background-position: 15px 98%;
 }
 
 .remark-slide-content {

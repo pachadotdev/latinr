@@ -484,9 +484,3 @@ ame_eu28_2
 * rOpenSci <3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
 * DigitalOcean: Danny
 * Unaffiliated: Joshua and Erasmo
-
----
-
-# Thanks for your attention!
-
-Please follow @ropensci
