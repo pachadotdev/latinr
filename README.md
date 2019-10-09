@@ -1,4 +1,4 @@
-# satrday-talk
+# latinr
 
 Slides for the two talks I gave at LatinR 2019 Santiago.
 
