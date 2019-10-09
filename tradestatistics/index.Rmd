@@ -483,4 +483,17 @@ ame_eu28_2
 
 * rOpenSci <3: Amanda, Emily, Jorge, Maelle, Mark and Stefanie
 * DigitalOcean: Danny
-* Unaffiliated: Joshua and Erasmo
+* Highcharter/Design: Joshua and Erasmo
+
+---
+
+<center>
+<h3>
+This work is licensed as
+
+**Creative Commons Attribution-NonCommercial 4.0 International**
+
+To view a copy of this license visit
+https://creativecommons.org/licenses/by-nc/4.0/
+</h3>
+<center>

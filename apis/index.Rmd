@@ -180,3 +180,16 @@ function(x, y, m) {
 **Twitter y Github: `pachamaltese`**
 
 **Email: `pacha arroba dcc punto uchile punto cl`**
+
+---
+
+<center>
+<h3>
+This work is licensed as
+
+**Creative Commons Attribution-NonCommercial 4.0 International**
+
+To view a copy of this license visit
+https://creativecommons.org/licenses/by-nc/4.0/
+</h3>
+<center>
